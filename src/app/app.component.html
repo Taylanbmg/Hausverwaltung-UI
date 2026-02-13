@@ -1,3 +1,12 @@
-Hallo welt
-<mat-checkbox>check</mat-checkbox>
-<router-outlet />
+<h2>Backend Test</h2>
+
+<button (click)="testGetAll()">Alle Readings laden</button>
+<button (click)="testGetById()">Reading per ID laden</button>
+
+<hr>
+
+<h3>Einzelnes Reading:</h3>
+<pre>{{ reading | json }}</pre>
+
+<h3>Alle Readings:</h3>
+<pre>{{ readings | json }}</pre>

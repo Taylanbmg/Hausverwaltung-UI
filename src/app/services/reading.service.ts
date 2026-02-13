@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {map, pipe} from 'rxjs';
 
 
@@ -27,17 +27,43 @@ export interface ReadingsWrapper {
 })
 export class ReadingService {
 
-  private apiUrl = 'http://localhost:8080/api/readings';
+  private apiUrl = 'http://localhost:8080/test/ressources/readings';
   constructor(private http: HttpClient) {}
 
-  create(reading: Reading) {
+  createReading(reading: Reading) {
     return this.http.post<ReadingWrapper>(this.apiUrl, {
       reading: reading
     }).pipe(map(res => res.reading));
   }
 
-  getById(id: string) {
+  getReadingById(id: string) {
     return this.http.get<ReadingWrapper>(`${this.apiUrl}/${id}`).pipe(map(res => res.reading));
   }
 
+  updateReading(reading: Reading) {
+    return this.http.put<{message: string}>(this.apiUrl, {reading: reading
+    });
+  }
+
+  deleteReading(id: string) {
+    return this.http.delete<{message: string}>(`${this.apiUrl}/${id}`);
+  }
+
+  getReadings(
+    customer?: string,
+    start?: string,
+    end?: string,
+    kindOfMeter?: string
+  ) {
+
+    let params = new HttpParams();
+
+    if (customer) params = params.set('customer', customer);
+    if (start) params = params.set('start', start);
+    if (end) params = params.set('end', end);
+    if (kindOfMeter) params = params.set('kindOfMeter', kindOfMeter);
+
+    return this.http.get<ReadingsWrapper>(this.apiUrl, { params })
+      .pipe(map(res => res.readings));
+  }
 }
