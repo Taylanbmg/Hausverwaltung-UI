@@ -5,10 +5,10 @@ import {Customer} from '../interfaces/Customer'
 @Injectable({ providedIn: 'root'})
 export class CustomerService{
 
-  private apiUrl = 'http://localhost:8080/test/ressources/customer'
+  private apiUrl = 'http://localhost:8080/test/ressources/customers'
   constructor(private httpClient: HttpClient) {}
 
-  getCustomer() {
-    return this.httpClient.get<{ customer: Customer[] }>(this.apiUrl);
+  getCustomers() {
+    return this.httpClient.get<{ customers: Customer[] }>(this.apiUrl);
   }
 }
