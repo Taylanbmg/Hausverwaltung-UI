@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {map, pipe} from 'rxjs';
-
+import {map} from 'rxjs';
 
 export interface Reading {
   id: string;
   customer: string;
   dateOfReading: string;
-  kindOfMeter: 'HEIZUNG' | 'STROM' | 'UNBEKANNT' | 'WASSER';
+  kindOfMeter: kindOfMeter;
   meterCount: number;
   meterId: string;
   comment: string;
   substitute: boolean;
+}
 
+export enum kindOfMeter {
+  HEIZUNG, STROM, WASSER, UNBEKANNT
 }
 
 export interface ReadingWrapper {

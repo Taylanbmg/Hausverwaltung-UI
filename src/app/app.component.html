@@ -1,12 +1,20 @@
-<h2>Backend Test</h2>
-
-<button (click)="testGetAll()">Alle Readings laden</button>
-<button (click)="testGetById()">Reading per ID laden</button>
-
-<hr>
-
-<h3>Einzelnes Reading:</h3>
-<pre>{{ reading | json }}</pre>
-
-<h3>Alle Readings:</h3>
-<pre>{{ readings | json }}</pre>
+<mat-toolbar>
+  <button mat-button class="toolbar-button">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Hausverwaltung</span>
+  <span class="example-spacer"></span>
+  <button mat-button class="toolbar-button">
+    Kunden
+  </button>
+  <span class="example-spacer"></span>
+  <button mat-button class="toolbar-button">
+    Ablesungen
+  </button>
+  <span class="example-spacer"></span>
+  <button mat-button class="toolbar-button">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+</mat-toolbar>
+<router-outlet>
+</router-outlet>
