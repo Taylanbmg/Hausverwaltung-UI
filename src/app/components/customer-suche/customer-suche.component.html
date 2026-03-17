@@ -1,0 +1,33 @@
+<h1>Kunden Suche</h1>
+<div class="content">
+
+  <mat-form-field appearance="fill" class="form-field">
+    <input class="input-field"
+      type="text"
+      matInput
+      placeholder="Suche nach Vor- oder Nachname"
+      [formControl]="control"
+      [matAutocomplete]="auto">
+
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      [displayWith]="displayFn"
+      (optionSelected)="onSelect($event.option.value)">
+
+      <mat-option *ngFor="let c of filteredCustomers" [value]="c">
+        {{ c.firstName }} {{ c.lastName }}
+      </mat-option>
+
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <div *ngIf="selectedCustomer">
+    <h2>Ausgewählter Kunde</h2>
+
+    <p><b>ID:</b> {{ selectedCustomer.id }}</p>
+    <p><b>Name:</b> {{ selectedCustomer.firstName }} {{ selectedCustomer.lastName }}</p>
+    <p><b>Geburtsdatum:</b> {{ selectedCustomer.birthDate }}</p>
+    <p><b>Geschlecht:</b> {{ selectedCustomer.gender }}</p>
+  </div>
+</div>
+
