@@ -21,4 +21,8 @@ export class CustomerOverviewPageComponent {
     this.router.navigate(['/suche']);
   }
 
+  goToCustomerErstellen() {
+    this.router.navigate(['/erstellen'])
+  }
+
 }

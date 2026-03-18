@@ -1,0 +1,15 @@
+.content {
+  width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.form-design {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.form-field {
+  width: 200px;
+}

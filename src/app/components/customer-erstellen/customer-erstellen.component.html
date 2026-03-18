@@ -1,1 +1,39 @@
-<p>customer-erstellen works!</p>
+<div class="content">
+  <form class="form-design">
+    <mat-form-field class="form-field">
+    <input class="input-field"
+           type="text"
+           matInput
+           placeholder="Vorname">
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+    <input class="input-field"
+           type="text"
+           matInput
+           placeholder="Nachname">
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <input class="input-field"
+             type="text"
+             matInput
+             placeholder="Geschlecht">
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label> Choose a date</mat-label>
+      <input matInput [matDatepicker]="datepicker"/>
+      <mat-hint> MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+      <mat-datepicker #datepicker>
+        <mat-datepicker-actions>
+          <button mat-button matDatepickerCancel>Cancel</button>
+          <button mat-raised-button matDatepickerApply>Apply</button>
+        </mat-datepicker-actions>
+      </mat-datepicker>
+    </mat-form-field>
+
+  </form>
+</div>
+
