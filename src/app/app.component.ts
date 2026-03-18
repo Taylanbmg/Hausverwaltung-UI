@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {RouterLink, RouterOutlet} from '@angular/router';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {ReadingService} from './services/reading.service';
 import {JsonPipe} from '@angular/common';
@@ -10,7 +10,7 @@ import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatToolbar, MatIcon, MatButton, MatIconModule],
+  imports: [RouterOutlet, MatToolbar, MatIcon, MatButton, MatIconModule, RouterLink],
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
