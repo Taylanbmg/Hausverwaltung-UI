@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Router, RouterOutlet} from '@angular/router';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {ReadingService} from './services/reading.service';
 import {JsonPipe} from '@angular/common';
@@ -19,7 +19,7 @@ export class AppComponent {
   readings: any[] = [];
   reading: any;
 
-  constructor(private readingService: ReadingService) {}
+  constructor(private readingService: ReadingService, private router: Router) {}
 
   testGetAll() {
     this.readingService.getReadings().subscribe(data => {
@@ -35,5 +35,9 @@ export class AppComponent {
       console.log(data);
       this.reading = data;
     });
+  }
+
+  goToCustomerOverview() {
+    this.router.navigate(['/overview'])
   }
 }
