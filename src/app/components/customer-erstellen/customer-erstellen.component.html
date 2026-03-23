@@ -1,39 +1,33 @@
 <div class="content">
-  <form class="form-design">
-    <mat-form-field class="form-field">
-    <input class="input-field"
-           type="text"
-           matInput
-           placeholder="Vorname">
-    </mat-form-field>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-design">
 
-    <mat-form-field class="form-field">
-    <input class="input-field"
-           type="text"
-           matInput
-           placeholder="Nachname">
-    </mat-form-field>
+  <mat-form-field class="form-field">
+    <input matInput placeholder="Vorname" formControlName="firstName">
+  </mat-form-field>
 
-    <mat-form-field class="form-field">
-      <input class="input-field"
-             type="text"
-             matInput
-             placeholder="Geschlecht">
-    </mat-form-field>
+  <mat-form-field class="form-field">
+    <input matInput placeholder="Nachname" formControlName="lastName">
+  </mat-form-field>
 
-    <mat-form-field class="form-field">
-      <mat-label> Choose a date</mat-label>
-      <input matInput [matDatepicker]="datepicker"/>
-      <mat-hint> MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-      <mat-datepicker #datepicker>
-        <mat-datepicker-actions>
-          <button mat-button matDatepickerCancel>Cancel</button>
-          <button mat-raised-button matDatepickerApply>Apply</button>
-        </mat-datepicker-actions>
-      </mat-datepicker>
-    </mat-form-field>
+  <mat-form-field class="form-field">
+    <mat-label>Geschlecht</mat-label>
+    <mat-select formControlName="gender">
+      <mat-option *ngFor="let g of geschlechterList" [value]="g.value">
+        {{ g.label }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-  </form>
+  <mat-form-field class="form-field">
+    <mat-label>Datum</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="birthDate">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">
+    Speichern
+  </button>
+
+</form>
 </div>
-

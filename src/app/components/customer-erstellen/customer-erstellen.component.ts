@@ -1,18 +1,13 @@
 import {Component} from '@angular/core';
-import {Customer} from '../../interfaces/Customer';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {CustomerService} from '../../services/CustomerService';
 import {MatFormField, MatInputModule} from '@angular/material/input';
-import {
-  MatDatepickerActions,
-  MatDatepickerApply,
-  MatDatepickerCancel,
-  MatDatepickerInput,
-  MatDatepickerModule,
-  MatDatepickerToggle
-} from '@angular/material/datepicker';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import {NgForOf} from '@angular/common';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-customer-erstellen',
@@ -21,25 +16,73 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     ReactiveFormsModule,
     MatFormField,
     MatFormFieldModule,
-    MatDatepickerToggle,
-    MatDatepickerInput,
-    MatDatepickerActions,
     MatDatepickerModule,
     MatButtonModule,
-    MatDatepickerApply,
-    MatDatepickerCancel
+    MatSelectModule,
+    NgForOf
   ],
   standalone: true,
   templateUrl: './customer-erstellen.component.html',
   styleUrl: './customer-erstellen.component.css'
 })
 export class CustomerErstellenComponent {
-  customers: Customer[] = [];
-  constructor(private customerService: CustomerService) {}
+  form = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    gender: new FormControl(''),
+    birthDate: new FormControl('')
+  });
 
-  ngOnInit(): void {
-    this.customerService.postCustomer(this.customers).subscribe(response => {
-      this.customers = response.customers;
-    });
+  geschlechterList = [
+    {label: 'Männlich', value: 'M'},
+    {label: 'Weiblich', value: 'W'},
+    {label: 'Divers', value: 'D'}
+  ];
+
+  constructor(private customerService: CustomerService,
+              private snackBar: MatSnackBar) {
+  }
+
+  onSubmit(): void {
+    const formValue = this.form.value;
+
+    const customer = {
+      ...formValue,
+      birthDate: formValue.birthDate
+        ? new Date(formValue.birthDate).toISOString().split('T')[0]
+        : null
+    };
+
+    this.customerService.createCustomer(customer as any)
+      .subscribe({
+        next: (response) => {
+          console.log('Created:', response);
+
+          this.snackBar.open(
+            '✅ Kunde erfolgreich erstellt',
+            'OK',
+            {
+              duration: 3000,
+              horizontalPosition: 'center',
+              verticalPosition: 'bottom'
+            }
+          );
+          this.form.reset();
+        },
+
+        error: (err) => {
+          console.error(err);
+
+          this.snackBar.open(
+            '❌ Fehler beim Erstellen',
+            'Schließen',
+            {
+              duration: 4000,
+              horizontalPosition: 'center',
+              verticalPosition: 'bottom'
+            }
+          );
+        }
+      });
   }
 }

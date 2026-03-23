@@ -1,6 +1,6 @@
 .content {
   width: 500px;
-  margin: 0 auto;
+  margin: 10px auto 0;
   text-align: center;
 }
 
@@ -11,5 +11,5 @@
 }
 
 .form-field {
-  width: 200px;
+  width: 100%;
 }
