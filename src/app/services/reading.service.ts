@@ -1,28 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {map} from 'rxjs';
-
-export interface Reading {
-  id: string;
-  customer: string;
-  dateOfReading: string;
-  kindOfMeter: kindOfMeter;
-  meterCount: number;
-  meterId: string;
-  comment: string;
-  substitute: boolean;
-}
-
-export enum kindOfMeter {
-  HEIZUNG, STROM, WASSER, UNBEKANNT
-}
-
-export interface ReadingWrapper {
-  reading: Reading;
-}
-export interface ReadingsWrapper {
-  readings: Reading[];
-}
+import { Reading, ReadingsWrapper } from '../models/reading.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,13 +12,13 @@ export class ReadingService {
   constructor(private http: HttpClient) {}
 
   createReading(reading: Reading) {
-    return this.http.post<ReadingWrapper>(this.apiUrl, {
+    return this.http.post<ReadingsWrapper>(this.apiUrl, {
       reading: reading
-    }).pipe(map(res => res.reading));
+    }).pipe(map(res => res.readings));
   }
 
   getReadingById(id: string) {
-    return this.http.get<ReadingWrapper>(`${this.apiUrl}/${id}`).pipe(map(res => res.reading));
+    return this.http.get<ReadingsWrapper>(`${this.apiUrl}/${id}`).pipe(map(res => res.readings));
   }
 
   updateReading(reading: Reading) {
