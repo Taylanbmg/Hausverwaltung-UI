@@ -1,17 +1,21 @@
-export type KindOfMeter = 'STROM' | 'WASSER' | 'HEIZUNG' | 'UNBEKANNT';
+import {Customer} from './customer.model';
+
+export type KindOfMeter = 'HEIZUNG' | 'STROM' | 'WASSER' | 'UNBEKANNT';
 
 export interface Reading {
-  id: string;
+  id?: string | null;
+  uuid?: string | null;
+  customer: Customer | null;
   dateOfReading: string;
-  meterCount: number;
-  kindOfMeter: KindOfMeter;   // <-- eigener Typ, kein string
-  comment: string;
+  comment?: string | null;
+  meterId: string;
   substitute: boolean;
-  customer: {
-    id: string;
-    firstName: string;
-    lastName: string;
-  };
+  meterCount: number;
+  kindOfMeter: KindOfMeter;
+}
+
+export interface ReadingWrapper {
+  reading: Reading;
 }
 
 export interface ReadingsWrapper {

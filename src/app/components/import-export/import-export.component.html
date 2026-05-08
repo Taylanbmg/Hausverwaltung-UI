@@ -1,0 +1,44 @@
+<div class="container">
+  <mat-card>
+    <mat-card-title>Import / Export</mat-card-title>
+
+    <mat-card-content>
+      <p>
+        Hier können Daten im JSON-, XML- oder CSV-Format exportiert werden.
+        JSON-Dateien können wieder importiert werden.
+      </p>
+
+      <div class="button-row">
+        <button mat-raised-button color="primary" (click)="exportJson()">
+          <mat-icon>download</mat-icon>
+          JSON exportieren
+        </button>
+
+        <button mat-raised-button color="primary" (click)="exportXml()">
+          <mat-icon>download</mat-icon>
+          XML exportieren
+        </button>
+
+        <button mat-raised-button color="primary" (click)="exportCsv()">
+          <mat-icon>download</mat-icon>
+          CSV exportieren
+        </button>
+      </div>
+
+      <div class="import-box">
+        <label>JSON importieren</label>
+        <input type="file" accept=".json,application/json" (change)="importJson($event)">
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="message" class="success-card">
+    <mat-icon color="primary">check_circle</mat-icon>
+    {{ message }}
+  </mat-card>
+
+  <mat-card *ngIf="errorMessage" class="error-card">
+    <mat-icon color="warn">error</mat-icon>
+    {{ errorMessage }}
+  </mat-card>
+</div>

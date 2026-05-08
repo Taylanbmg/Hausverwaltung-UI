@@ -16,11 +16,17 @@ import {MatButton} from '@angular/material/button';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  readings: any[] = [];
-  reading: any;
 
-  constructor(private readingService: ReadingService, private router: Router) {}
-  goToReading() {
+  constructor( private router: Router) {}
+  goToCustomers(): void {
+    this.router.navigate(['/customers']);
+  }
+
+  goToReading(): void {
     this.router.navigate(['/reading']);
+  }
+
+  goToImportExport(): void {
+    this.router.navigate(['/import-export']);
   }
 }

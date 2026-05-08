@@ -1,0 +1,100 @@
+.filter-card {
+  padding: 24px;
+}
+.filter-card-title {
+  margin-bottom: 16px;
+}
+
+.filter-container {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+
+  mat-form-field {
+    flex: 1 1 200px;
+  }
+
+  .full-width {
+    flex: 1 1 100%;
+  }
+}
+
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.error-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background-color: #fff3f3;
+}
+
+.table-card {
+  overflow-x: auto;
+  padding: 24px;
+}
+
+.full-width {
+  width: 100%;
+
+}
+
+.container {
+  display: grid;
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  align-items: center;
+}
+
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.table-card {
+  overflow-x: auto;
+}
+
+.error-card,
+.success-card {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.error-card {
+  color: #b00020;
+}
+
+.success-card {
+  color: #1b5e20;
+}
+
+@media (max-width: 1000px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

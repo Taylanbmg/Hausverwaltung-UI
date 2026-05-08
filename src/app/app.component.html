@@ -1,20 +1,28 @@
-<mat-toolbar>
-  <button mat-button class="toolbar-button">
-    <mat-icon>menu</mat-icon>
+<mat-toolbar color="primary">
+  <button mat-button class="toolbar-button" (click)="goToCustomers()">
+    <mat-icon>home</mat-icon>
   </button>
-  <span>Hausverwaltung</span>
-  <span class="example-spacer"></span>
-  <button mat-button class="toolbar-button">
+
+  <span class="title">Hausverwaltung</span>
+  <span class="spacer"></span>
+
+  <button mat-button class="toolbar-button" (click)="goToCustomers()">
     Kunden
   </button>
-  <span class="example-spacer"></span>
+
   <button mat-button class="toolbar-button" (click)="goToReading()">
     Ablesungen
   </button>
-  <span class="example-spacer"></span>
+
+  <button mat-button class="toolbar-button" (click)="goToImportExport()">
+    Import / Export
+  </button>
+
   <button mat-button class="toolbar-button">
     <mat-icon>account_circle</mat-icon>
   </button>
 </mat-toolbar>
-<router-outlet>
-</router-outlet>
+
+<main class="content">
+  <router-outlet></router-outlet>
+</main>
