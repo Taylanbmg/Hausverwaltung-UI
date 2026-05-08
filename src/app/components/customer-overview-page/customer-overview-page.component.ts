@@ -25,4 +25,8 @@ export class CustomerOverviewPageComponent {
     this.router.navigate(['/erstellen'])
   }
 
+  goToCustomerUpdate() {
+    this.router.navigate(['/customers/update/{uuid}'])
+  }
+
 }

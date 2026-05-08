@@ -1,9 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Router, RouterOutlet} from '@angular/router';
-import {MatCheckbox} from '@angular/material/checkbox';
 import {ReadingService} from './services/reading.service';
-import {JsonPipe} from '@angular/common';
-import {MatSidenav, MatSidenavContainer} from '@angular/material/sidenav';
 import {MatToolbar} from '@angular/material/toolbar';
 import {MatIcon, MatIconModule} from '@angular/material/icon';
 import {MatButton} from '@angular/material/button';

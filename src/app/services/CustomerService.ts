@@ -9,6 +9,8 @@ export class CustomerService{
   private apiUrlGetCustomer = 'http://localhost:8080/test/ressources/customers'
 
   private apiUrlPostCustomer = 'http://localhost:8080/test/ressources/customers'
+
+  private apiUrlPutCustomer = 'http://localhost:8080/test/ressources/customers'
   constructor(private httpClient: HttpClient) {}
 
   getCustomers() {
@@ -17,5 +19,18 @@ export class CustomerService{
 
   createCustomer(customer: Customer) {
     return this.httpClient.post<{ customer: Customer }>(this.apiUrlPostCustomer, customer);
+  }
+
+  updateCustomer(customer: Customer, uuid: string) {
+    return this.httpClient.put<{ message: string }>(
+      `${this.apiUrlPutCustomer}/${uuid}`,
+      customer
+    );
+  }
+
+  getCustomerById(uuid: string) {
+    return this.httpClient.get<Customer>(
+      `${this.apiUrlGetCustomer}/${uuid}`
+    );
   }
 }

@@ -1,0 +1,113 @@
+<div *ngIf="isInitialLoading">
+  Lade Kundendaten...
+</div>
+
+<div *ngIf="!isInitialLoading" class="content">
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-design">
+
+    <!-- Customer Auswahl -->
+    <mat-form-field class="form-field">
+      <mat-label>Kunde auswählen</mat-label>
+
+      <mat-select (selectionChange)="onCustomerSelect($event.value)">
+
+        <mat-option value="">
+          Kunde auswählen
+        </mat-option>
+
+        <mat-option
+          *ngFor="let customer of customers"
+          [value]="customer.id">
+
+          {{ customer.firstName }} {{ customer.lastName }}
+
+        </mat-option>
+
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Vorname -->
+    <mat-form-field class="form-field">
+      <input
+        matInput
+        placeholder="Vorname"
+        formControlName="firstName">
+
+      <mat-error *ngIf="form.get('firstName')?.invalid">
+        Vorname ist erforderlich
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Nachname -->
+    <mat-form-field class="form-field">
+      <input
+        matInput
+        placeholder="Nachname"
+        formControlName="lastName">
+
+      <mat-error *ngIf="form.get('lastName')?.invalid">
+        Nachname ist erforderlich
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Geschlecht -->
+    <mat-form-field class="form-field">
+      <mat-label>Geschlecht</mat-label>
+
+      <mat-select formControlName="gender">
+
+        <mat-option value="M">
+          Männlich
+        </mat-option>
+
+        <mat-option value="W">
+          Weiblich
+        </mat-option>
+
+        <mat-option value="D">
+          Divers
+        </mat-option>
+
+      </mat-select>
+
+      <mat-error *ngIf="form.get('gender')?.invalid">
+        Geschlecht ist erforderlich
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Geburtsdatum -->
+    <mat-form-field class="form-field">
+      <mat-label>Geburtsdatum</mat-label>
+
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="birthDate">
+
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker">
+      </mat-datepicker-toggle>
+
+      <mat-datepicker #picker></mat-datepicker>
+
+      <mat-error *ngIf="form.get('birthDate')?.invalid">
+        Geburtsdatum ist erforderlich
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Submit -->
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid || isLoading">
+
+      {{ isLoading ? 'Speichert...' : 'Speichern' }}
+
+    </button>
+
+  </form>
+
+</div>
