@@ -29,4 +29,8 @@ export class CustomerOverviewPageComponent {
     this.router.navigate(['/customers/update/{uuid}'])
   }
 
+  goToCustomerDelete() {
+    this.router.navigate(['/löschen'])
+  }
+
 }

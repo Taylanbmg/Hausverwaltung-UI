@@ -93,7 +93,7 @@ export class CustomerUpdateComponent implements OnInit {
       firstName: selectedCustomer.firstName,
       lastName: selectedCustomer.lastName,
       gender: selectedCustomer.gender,
-      birthDate: selectedCustomer.birthDate
+      birthDate: new Date(selectedCustomer.birthDate)
     });
   }
 

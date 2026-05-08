@@ -1,0 +1,39 @@
+<div *ngIf="isInitialLoading">
+  Lade Kundendaten...
+</div>
+
+<div *ngIf="!isInitialLoading" class="content">
+
+  <mat-form-field class="form-field">
+
+    <mat-label>Kunde auswählen</mat-label>
+
+    <mat-select (selectionChange)="onCustomerSelect($event)">
+
+      <mat-option value="">
+        Kunde auswählen
+      </mat-option>
+
+      <mat-option
+        *ngFor="let customer of customers"
+        [value]="customer.id">
+
+        {{ customer.firstName }} {{ customer.lastName }}
+
+      </mat-option>
+
+    </mat-select>
+
+  </mat-form-field>
+
+  <button
+    mat-raised-button
+    color="warn"
+    [disabled]="!selectedCustomerId || isLoading"
+    (click)="onDelete()">
+
+    {{ isLoading ? 'Löscht...' : 'Kunden löschen' }}
+
+  </button>
+
+</div>

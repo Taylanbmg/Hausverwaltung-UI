@@ -6,31 +6,34 @@ import {Observable} from 'rxjs';
 @Injectable({ providedIn: 'root'})
 export class CustomerService{
 
-  private apiUrlGetCustomer = 'http://localhost:8080/test/ressources/customers'
+  private apiUrl = 'http://localhost:8080/test/ressources/customers'
 
-  private apiUrlPostCustomer = 'http://localhost:8080/test/ressources/customers'
-
-  private apiUrlPutCustomer = 'http://localhost:8080/test/ressources/customers'
   constructor(private httpClient: HttpClient) {}
 
   getCustomers() {
-    return this.httpClient.get<{ customers: Customer[] }>(this.apiUrlGetCustomer);
+    return this.httpClient.get<{ customers: Customer[] }>(this.apiUrl);
   }
 
   createCustomer(customer: Customer) {
-    return this.httpClient.post<{ customer: Customer }>(this.apiUrlPostCustomer, customer);
+    return this.httpClient.post<{ customer: Customer }>(this.apiUrl, customer);
   }
 
   updateCustomer(customer: Customer, uuid: string) {
     return this.httpClient.put<{ message: string }>(
-      `${this.apiUrlPutCustomer}/${uuid}`,
+      `${this.apiUrl}/${uuid}`,
       customer
+    );
+  }
+
+  deleteCustomer(uuid: string) {
+    return this.httpClient.delete<{ message: string }>(
+      `${this.apiUrl}/${uuid}`,
     );
   }
 
   getCustomerById(uuid: string) {
     return this.httpClient.get<Customer>(
-      `${this.apiUrlGetCustomer}/${uuid}`
+      `${this.apiUrl}/${uuid}`
     );
   }
 }
