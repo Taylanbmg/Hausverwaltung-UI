@@ -12,7 +12,7 @@ export const routes: Routes = [
   { path: 'overview', component: CustomerOverviewPageComponent},
   { path: 'suche', component: CustomerSucheComponent},
   { path: 'erstellen', component: CustomerErstellenComponent},
-  { path: 'customers/update/:uuid', component: CustomerUpdateComponent },
+  { path: 'update', component: CustomerUpdateComponent },
   { path: 'löschen', component: CustomerDeleteComponent },
   { path: '', redirectTo: 'customers', pathMatch: 'full' },
   { path: 'customers', component: CustomerComponent },
