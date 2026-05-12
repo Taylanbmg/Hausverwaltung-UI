@@ -8,6 +8,7 @@ import {ReadingComponent} from './components/reading/reading.component';
 import {ImportExportComponent} from './components/import-export/import-export.component';
 import {CustomerComponent} from './components/customer/customer.component';
 import {ReadingOverviewPageComponent} from './components/reading-overview-page/reading-overview-page.component';
+import {StatisticsComponent} from './components/statistics/statistics.component';
 
 export const routes: Routes = [
   { path: 'overview', component: CustomerOverviewPageComponent},
@@ -21,5 +22,6 @@ export const routes: Routes = [
   { path: 'overviewReading', component: ReadingOverviewPageComponent},
   { path: 'erstellenReading', component: ReadingComponent},
   { path: 'import-export', component: ImportExportComponent },
+  { path: 'statistics', component: StatisticsComponent },
   { path: '**', redirectTo: 'customers' }
 ];
