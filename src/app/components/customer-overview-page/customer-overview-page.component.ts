@@ -26,7 +26,7 @@ export class CustomerOverviewPageComponent {
   }
 
   goToCustomerUpdate() {
-    this.router.navigate(['/customers/update/{uuid}'])
+    this.router.navigate(['update'])
   }
 
   goToCustomerDelete() {
