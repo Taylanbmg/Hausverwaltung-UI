@@ -33,4 +33,7 @@ export class AppComponent {
   goToCustomerOverview() {
     this.router.navigate(['/overview'])
   }
+  goToStatistics(): void {
+    this.router.navigate(['/statistics']);
+  }
 }
