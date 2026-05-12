@@ -23,7 +23,7 @@ export class AppComponent {
   }
 
   goToReading(): void {
-    this.router.navigate(['/reading']);
+    this.router.navigate(['/overviewReading']);
   }
 
   goToImportExport(): void {

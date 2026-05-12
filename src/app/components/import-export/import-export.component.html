@@ -1,44 +1,65 @@
 <div class="container">
+
+  <!-- Export -->
   <mat-card>
-    <mat-card-title>Import / Export</mat-card-title>
+    <mat-card-header>
+      <mat-icon mat-card-avatar>upload_file</mat-icon>
+      <mat-card-title>Daten exportieren</mat-card-title>
+      <mat-card-subtitle>Exportiere alle Kunden- und Ablesungsdaten in verschiedenen Formaten</mat-card-subtitle>
+    </mat-card-header>
 
     <mat-card-content>
-      <p>
-        Hier können Daten im JSON-, XML- oder CSV-Format exportiert werden.
-        JSON-Dateien können wieder importiert werden.
-      </p>
+      <div class="export-grid">
 
-      <div class="button-row">
-        <button mat-raised-button color="primary" (click)="exportJson()">
-          <mat-icon>download</mat-icon>
-          JSON exportieren
-        </button>
+        <div class="export-tile" (click)="exportJson()">
+          <mat-icon class="export-icon">data_object</mat-icon>
+          <div class="export-label">JSON</div>
+          <div class="export-hint">Kunden & Ablesungen</div>
+          <mat-icon class="download-icon">download</mat-icon>
+        </div>
 
-        <button mat-raised-button color="primary" (click)="exportXml()">
-          <mat-icon>download</mat-icon>
-          XML exportieren
-        </button>
+        <div class="export-tile" (click)="exportXml()">
+          <mat-icon class="export-icon">code</mat-icon>
+          <div class="export-label">XML</div>
+          <div class="export-hint">Kunden & Ablesungen</div>
+          <mat-icon class="download-icon">download</mat-icon>
+        </div>
 
-        <button mat-raised-button color="primary" (click)="exportCsv()">
-          <mat-icon>download</mat-icon>
-          CSV exportieren
-        </button>
-      </div>
+        <div class="export-tile" (click)="exportCsv()">
+          <mat-icon class="export-icon">table_chart</mat-icon>
+          <div class="export-label">CSV</div>
+          <div class="export-hint">Nur Ablesungen</div>
+          <mat-icon class="download-icon">download</mat-icon>
+        </div>
 
-      <div class="import-box">
-        <label>JSON importieren</label>
-        <input type="file" accept=".json,application/json" (change)="importJson($event)">
       </div>
     </mat-card-content>
   </mat-card>
 
-  <mat-card *ngIf="message" class="success-card">
-    <mat-icon color="primary">check_circle</mat-icon>
-    {{ message }}
+  <!-- Import -->
+  <mat-card>
+    <mat-card-header>
+      <mat-icon mat-card-avatar>download_for_offline</mat-icon>
+      <mat-card-title>Daten importieren</mat-card-title>
+      <mat-card-subtitle>Importiere eine zuvor exportierte JSON-Datei</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="import-drop-zone" (click)="fileInput.click()">
+        <mat-icon class="drop-icon">upload_file</mat-icon>
+        <div class="drop-label">JSON-Datei auswählen</div>
+        <div class="drop-hint">Klicke hier um eine Datei zu wählen</div>
+        <input #fileInput type="file" accept=".json,application/json" (change)="importJson($event)" hidden>
+      </div>
+    </mat-card-content>
   </mat-card>
 
+  <!-- Erfolg / Fehler -->
+
+
   <mat-card *ngIf="errorMessage" class="error-card">
-    <mat-icon color="warn">error</mat-icon>
+    <mat-icon>error</mat-icon>
     {{ errorMessage }}
   </mat-card>
+
 </div>

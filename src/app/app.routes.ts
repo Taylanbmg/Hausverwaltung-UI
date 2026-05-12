@@ -7,6 +7,7 @@ import {CustomerDeleteComponent} from './components/customer-delete/customer-del
 import {ReadingComponent} from './components/reading/reading.component';
 import {ImportExportComponent} from './components/import-export/import-export.component';
 import {CustomerComponent} from './components/customer/customer.component';
+import {ReadingOverviewPageComponent} from './components/reading-overview-page/reading-overview-page.component';
 
 export const routes: Routes = [
   { path: 'overview', component: CustomerOverviewPageComponent},
@@ -17,6 +18,8 @@ export const routes: Routes = [
   { path: '', redirectTo: 'customers', pathMatch: 'full' },
   { path: 'customers', component: CustomerComponent },
   { path: 'reading', component: ReadingComponent },
+  { path: 'overviewReading', component: ReadingOverviewPageComponent},
+  { path: 'erstellenReading', component: ReadingComponent},
   { path: 'import-export', component: ImportExportComponent },
   { path: '**', redirectTo: 'customers' }
 ];

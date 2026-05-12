@@ -1,58 +1,50 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {HttpParams} from '@angular/common/http';
-import {ReadingService} from '../../services/reading.service';
-import {KindOfMeter, Reading} from '../../models/reading.model';
-import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
-import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatIcon} from '@angular/material/icon';
-import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
-import {MatOption, MatSelect} from '@angular/material/select';
-import {MatProgressBar} from '@angular/material/progress-bar';
-import {Router} from '@angular/router';
-import { NgForOf, NgIf, DatePipe } from '@angular/common';
-import {
-  MatCell, MatCellDef,
-  MatColumnDef,
-  MatHeaderCell, MatHeaderCellDef,
-  MatHeaderRow, MatHeaderRowDef,
-  MatRow, MatRowDef,
-  MatTable
-} from '@angular/material/table';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReadingService } from '../../services/reading.service';
+import { KindOfMeter, Reading } from '../../models/reading.model';
+import { MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle } from '@angular/material/card';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
+import { MatOption, MatSelect } from '@angular/material/select';
+import { MatProgressBar } from '@angular/material/progress-bar';
+import {NgForOf, NgIf, DatePipe, NgClass} from '@angular/common';
+import { MatCell, MatCellDef, MatColumnDef, MatHeaderCell, MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import {MatCheckbox} from '@angular/material/checkbox';
-import {Customer} from '../../models/customer.model';
-import {CustomerService} from '../../services/customer.service';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { Customer } from '../../models/customer.model';
+import { CustomerService } from '../../services/customer.service';
+import {ReadingDialogComponent} from '../dialog/readingDialog.component';
+import {MatChip} from '@angular/material/chips';
 
 
 @Component({
   selector: 'app-reading',
   standalone: true,
   imports: [
-    MatTable,
-    MatColumnDef,
+    MatTable, MatColumnDef,
     MatHeaderCell, MatHeaderCellDef,
     MatCell, MatCellDef,
     MatHeaderRow, MatHeaderRowDef,
     MatRow, MatRowDef,
     ReactiveFormsModule,
-    MatCard, MatCardContent, MatCardTitle,
+    MatCard, MatCardContent, MatCardHeader, MatCardTitle, MatCardSubtitle,
     MatFormField, MatLabel, MatError,
-    MatInputModule,
-    MatButtonModule,
-    MatIcon,
+    MatInputModule, MatButtonModule,
+    MatIcon, MatTooltipModule,
     MatDatepickerInput, MatDatepickerToggle, MatDatepicker,
     MatSelect, MatOption,
     MatProgressBar,
-    NgIf, NgForOf, DatePipe, MatCheckbox,
+    NgIf, NgForOf, DatePipe, MatChip, NgClass
   ],
   templateUrl: './reading.component.html',
   styleUrl: './reading.component.css'
 })
 export class ReadingComponent implements OnInit {
   filterForm!: FormGroup;
-  readingForm!: FormGroup;
 
   readings: Reading[] = [];
   customers: Customer[] = [];
@@ -62,13 +54,8 @@ export class ReadingComponent implements OnInit {
   successMessage = '';
 
   displayedColumns: string[] = [
-    'dateOfReading',
-    'meterId',
-    'meterCount',
-    'kindOfMeter',
-    'comment',
-    'substitute',
-    'actions'
+    'dateOfReading', 'meterId', 'meterCount',
+    'kindOfMeter', 'comment', 'substitute', 'actions'
   ];
 
   kindOfMeterOptions: { value: KindOfMeter | ''; label: string }[] = [
@@ -80,29 +67,18 @@ export class ReadingComponent implements OnInit {
   ];
 
   constructor(
-    private formBuilder: FormBuilder,
+    private fb: FormBuilder,
     private readingService: ReadingService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.filterForm = this.formBuilder.group({
+    this.filterForm = this.fb.group({
       customer: ['', Validators.required],
       start: [null],
       end: [null],
       kindOfMeter: ['']
-    });
-
-    this.readingForm = this.formBuilder.group({
-      id: [null],
-      uuid: [null],
-      customer: ['', Validators.required],
-      dateOfReading: [null, Validators.required],
-      meterId: ['', Validators.required],
-      meterCount: [0, Validators.required],
-      kindOfMeter: ['UNBEKANNT', Validators.required],
-      substitute: [false],
-      comment: ['']
     });
 
     this.loadCustomers();
@@ -110,17 +86,15 @@ export class ReadingComponent implements OnInit {
 
   loadCustomers(): void {
     this.customerService.getCustomers().subscribe({
-      next: customers => this.customers = customers,
+      next: c => this.customers = c,
       error: err => this.handleError(err)
     });
   }
 
   onSearch(): void {
     if (this.filterForm.invalid) return;
-
     this.isLoading = true;
     this.errorMessage = '';
-    this.successMessage = '';
     this.readings = [];
 
     const { customer, start, end, kindOfMeter } = this.filterForm.value;
@@ -131,48 +105,35 @@ export class ReadingComponent implements OnInit {
       end ? this.formatDate(end) : undefined,
       kindOfMeter || undefined
     ).subscribe({
-      next: readings => {
-        this.readings = readings;
-        this.isLoading = false;
-      },
+      next: r => { this.readings = r; this.isLoading = false; },
       error: err => this.handleError(err)
     });
   }
 
-  saveReading(): void {
-    if (this.readingForm.invalid) return;
+  openDialog(reading: Reading | null = null): void {
+    const ref = this.dialog.open(ReadingDialogComponent, {
+      width: '780px',
+      maxHeight: '90vh',
+      panelClass: 'reading-dialog-panel',
+      data: { reading, customers: this.customers }
+    });
 
-    const reading = this.prepareReading(this.readingForm.value);
-    const id = reading.id || reading.uuid;
+    ref.afterClosed().subscribe(result => {
+      if (!result) return;
+      const prepared = this.prepareReading(result);
+      const id = prepared.id || prepared.uuid;
 
-    if (id) {
-      this.readingService.updateReading(reading).subscribe({
-        next: () => {
-          this.successMessage = 'Ablesung aktualisiert.';
-          this.errorMessage = '';
-          this.resetReadingForm();
-          this.onSearch();
-        },
-        error: (err: any) => this.handleError(err)
-      });
-    } else {
-      this.readingService.createReading(reading).subscribe({
-        next: () => {
-          this.successMessage = 'Ablesung angelegt.';
-          this.errorMessage = '';
-          this.resetReadingForm();
-          this.onSearch();
-        },
-        error: (err: any) => this.handleError(err)
-      });
-    }
-  }
-
-  editReading(reading: Reading): void {
-    this.readingForm.patchValue({
-      ...reading,
-      customer: reading.customer?.id || reading.customer?.uuid || '',
-      dateOfReading: reading.dateOfReading ? new Date(reading.dateOfReading) : null
+      if (id) {
+        this.readingService.updateReading(prepared).subscribe({
+          next: () => { this.successMessage = 'Ablesung aktualisiert.'; this.errorMessage = ''; this.onSearch(); },
+          error: err => this.handleError(err)
+        });
+      } else {
+        this.readingService.createReading(prepared).subscribe({
+          next: () => { this.successMessage = 'Ablesung angelegt.'; this.errorMessage = ''; this.onSearch(); },
+          error: err => this.handleError(err)
+        });
+      }
     });
   }
 
@@ -181,45 +142,20 @@ export class ReadingComponent implements OnInit {
     if (!id) return;
 
     this.readingService.deleteReading(id).subscribe({
-      next: () => {
-        this.successMessage = 'Ablesung gelöscht.';
-        this.errorMessage = '';
-        this.onSearch();
-      },
+      next: () => { this.successMessage = 'Ablesung gelöscht.'; this.errorMessage = ''; this.onSearch(); },
       error: err => this.handleError(err)
     });
   }
 
   onReset(): void {
-    this.filterForm.reset({
-      customer: '',
-      start: null,
-      end: null,
-      kindOfMeter: ''
-    });
-
+    this.filterForm.reset({ customer: '', start: null, end: null, kindOfMeter: '' });
     this.readings = [];
     this.errorMessage = '';
     this.successMessage = '';
   }
 
-  resetReadingForm(): void {
-    this.readingForm.reset({
-      id: null,
-      uuid: null,
-      customer: '',
-      dateOfReading: null,
-      meterId: '',
-      meterCount: 0,
-      kindOfMeter: 'UNBEKANNT',
-      substitute: false,
-      comment: ''
-    });
-  }
-
   private prepareReading(value: any): Reading {
     const customer = this.customers.find(c => (c.id || c.uuid) === value.customer) ?? null;
-
     return {
       id: value.id,
       uuid: value.uuid,
@@ -231,7 +167,6 @@ export class ReadingComponent implements OnInit {
       substitute: Boolean(value.substitute),
       comment: value.comment || null
     };
-
   }
 
   private formatDate(date: Date | string): string {
@@ -244,6 +179,4 @@ export class ReadingComponent implements OnInit {
     this.successMessage = '';
     this.isLoading = false;
   }
-
-
 }

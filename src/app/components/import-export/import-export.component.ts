@@ -1,14 +1,15 @@
 import {NgIf} from '@angular/common';
-import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
+import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {Component} from '@angular/core';
+import {forkJoin} from 'rxjs';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {ReadingService} from '../../services/reading.service';
 import {ImportExportService} from '../../services/import-export.service';
 import {Reading} from '../../models/reading.model';
 import {CustomerService} from '../../services/customer.service';
 import {Customer} from '../../models/customer.model';
-import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-import-export',
@@ -19,7 +20,9 @@ import {forkJoin} from 'rxjs';
     MatCardContent,
     MatCardTitle,
     MatButtonModule,
-    MatIcon
+    MatIcon,
+    MatCardHeader,
+    MatCardSubtitle
   ],
   templateUrl: './import-export.component.html',
   styleUrl: './import-export.component.css'
@@ -31,7 +34,8 @@ export class ImportExportComponent {
   constructor(
     private customerService: CustomerService,
     private readingService: ReadingService,
-    private importExportService: ImportExportService
+    private importExportService: ImportExportService,
+    private snackBar: MatSnackBar
   ) {}
 
   exportJson(): void {
@@ -106,6 +110,15 @@ export class ImportExportComponent {
         this.errorMessage = 'JSON konnte nicht gelesen werden.';
         this.message = '';
       });
+  }
+
+  private showSuccess(msg: string): void {
+    this.snackBar.open(msg, '✕', {
+      duration: 3000,
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+      panelClass: ['snack-success']
+    });
   }
 
   private handleError(err: any): void {
