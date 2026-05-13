@@ -1,30 +1,68 @@
-<mat-toolbar class="mat-toolbar" color="primary">
- <!-- <button mat-button class="toolbar-button" (click)="goToCustomers()">
-    <mat-icon>home</mat-icon>
-  </button>-->
+<mat-sidenav-container class="sidenav-container">
 
-  <span class="title">Hausverwaltung</span>
-  <span class="spacer"></span>
+  <!-- Profil Sidebar -->
+  <mat-sidenav #profileSidenav position="end" mode="over" class="profile-sidenav">
+    <div class="profile-header">
+      <div class="avatar">{{ initials }}</div>
+      <div class="profile-info">
+        <div class="profile-name">Max Mustermann</div>
+        <div class="profile-role">Administrator</div>
+      </div>
+    </div>
 
-  <button mat-button class="toolbar-button" (click)="goToCustomerOverview()">
-    Kunden
-  </button>
+    <mat-divider></mat-divider>
 
-  <button mat-button class="toolbar-button" (click)="goToReading()">
-    Ablesungen
-  </button>
+    <div class="profile-stats">
+      <div class="stat-tile">
+        <mat-icon>people</mat-icon>
+        <div class="stat-value">{{ customerCount }}</div>
+        <div class="stat-label">Kunden</div>
+      </div>
+      <div class="stat-tile">
+        <mat-icon>speed</mat-icon>
+        <div class="stat-value">{{ readingCount }}</div>
+        <div class="stat-label">Ablesungen</div>
+      </div>
+    </div>
 
-  <button mat-button class="toolbar-button" (click)="goToImportExport()">
-    Import / Export
-  </button>
-  <button mat-button class="toolbar-button" (click)="goToStatistics()">
-    Auswertungen
-  </button>
-  <button mat-button class="toolbar-button">
-    <mat-icon>account_circle</mat-icon>
-  </button>
-</mat-toolbar>
+    <mat-divider></mat-divider>
 
-<main class="content">
-  <router-outlet></router-outlet>
-</main>
+    <div class="profile-actions">
+      <div class="action-row">
+        <mat-icon>dark_mode</mat-icon>
+        <span>Dark Mode</span>
+        <mat-slide-toggle [(ngModel)]="darkMode" (change)="toggleDarkMode()"></mat-slide-toggle>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+
+  </mat-sidenav>
+
+  <!-- Hauptinhalt -->
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button mat-button class="toolbar-button" (click)="goToCustomers()">
+        <mat-icon>home</mat-icon>
+      </button>
+
+      <span class="title">Hausverwaltung</span>
+      <span class="spacer"></span>
+
+      <button mat-button class="toolbar-button" (click)="goToCustomers()">Kunden</button>
+      <button mat-button class="toolbar-button" (click)="goToReading()">Ablesungen</button>
+      <button mat-button class="toolbar-button" (click)="goToImportExport()">Import / Export</button>
+      <button mat-button class="toolbar-button" (click)="goToStatistics()">Auswertungen</button>
+
+      <button mat-icon-button (click)="profileSidenav.toggle()" class="toolbar-avatar-btn">
+        <div class="toolbar-avatar">{{ initials }}</div>
+      </button>
+    </mat-toolbar>
+
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

@@ -1,8 +1,143 @@
-.mat-toolbar {
-  gap: 10%;
+.sidenav-container {
+  height: 100vh;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
+.toolbar-button {
+  margin: 0 4px;
+}
+
+/* Avatar Button zentriert */
+.toolbar-avatar-btn {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Avatar in Toolbar */
+.toolbar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: white;
+  color: #c2185b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+/* Sidebar */
+.profile-sidenav {
+  width: 300px;
+  padding: 0;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 28px 24px;
+  background: linear-gradient(135deg, #c2185b, #880e4f);
+  color: white;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: white;
+  color: #c2185b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.profile-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.profile-role {
+  font-size: 13px;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+/* Statistiken */
+.profile-stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 24px 16px;
+}
+
+.stat-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-tile mat-icon {
+  color: #c2185b;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #888;
+}
+
+/* Actions */
+.profile-actions {
+  padding: 16px 24px;
+}
+
+.action-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.action-row span {
+  flex: 1;
+  font-size: 14px;
+}
+
+/* Logout */
+.logout-section {
+  padding: 24px;
+}
+
+.logout-btn {
   width: 100%;
 }
-.example-spacer {
-  flex: 1 1 auto;
 
+/* Hauptinhalt */
+.content {
+  padding: 24px;
+  box-sizing: border-box;
 }
