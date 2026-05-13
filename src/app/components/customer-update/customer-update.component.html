@@ -92,8 +92,11 @@
 
       <mat-datepicker #picker></mat-datepicker>
 
-      <mat-error *ngIf="form.get('birthDate')?.invalid">
+      <mat-error *ngIf="form.get('birthDate')?.hasError('required')">
         Geburtsdatum ist erforderlich
+      </mat-error>
+      <mat-error *ngIf="form.controls['birthDate'].hasError('futureDate')">
+        Geburtsdatum kann nicht in der Zukunft liegen.
       </mat-error>
     </mat-form-field>
 

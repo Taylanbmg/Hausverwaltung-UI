@@ -4,7 +4,15 @@ import {Customer} from '../../interfaces/Customer';
 
 import {firstValueFrom} from 'rxjs';
 
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 
 import {NgForOf, NgIf} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -14,6 +22,15 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatNativeDateModule} from '@angular/material/core';
 
+export const noFutureDateValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  if (!control.value) return null;
+
+  const selected = new Date(control.value);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  return selected > today ? {futureDate: true} : null;
+};
 @Component({
   selector: 'app-customer-update',
   standalone: true,
@@ -21,7 +38,6 @@ import {MatNativeDateModule} from '@angular/material/core';
     ReactiveFormsModule,
     NgIf,
     NgForOf,
-
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
@@ -58,7 +74,7 @@ export class CustomerUpdateComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       gender: ['', Validators.required],
-      birthDate: ['', Validators.required],
+      birthDate: ['',[ Validators.required, noFutureDateValidator]],
     });
   }
 

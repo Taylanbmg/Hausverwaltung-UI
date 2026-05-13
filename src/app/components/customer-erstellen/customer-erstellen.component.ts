@@ -1,14 +1,30 @@
 import {Component} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn
+} from '@angular/forms';
 import {CustomerService} from '../../services/CustomerService';
 import {MatFormField, MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
+export const noFutureDateValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  if (!control.value) return null;
+
+  const selected = new Date(control.value);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  return selected > today ? {futureDate: true} : null;
+};
 @Component({
   selector: 'app-customer-erstellen',
   imports: [
@@ -19,7 +35,8 @@ import {MatSnackBar} from '@angular/material/snack-bar';
     MatDatepickerModule,
     MatButtonModule,
     MatSelectModule,
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   standalone: true,
   templateUrl: './customer-erstellen.component.html',
@@ -30,7 +47,7 @@ export class CustomerErstellenComponent {
     firstName: new FormControl(''),
     lastName: new FormControl(''),
     gender: new FormControl(''),
-    birthDate: new FormControl('')
+    birthDate: new FormControl('', noFutureDateValidator)
   });
 
   geschlechterList = [
