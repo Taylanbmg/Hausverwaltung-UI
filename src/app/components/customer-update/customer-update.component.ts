@@ -31,6 +31,17 @@ export const noFutureDateValidator: ValidatorFn = (control: AbstractControl): Va
 
   return selected > today ? {futureDate: true} : null;
 };
+
+export const minAge18Validator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  if (!control.value) return null;
+
+  const selected = new Date(control.value);
+  const today = new Date();
+
+  today.setFullYear(today.getFullYear() - 18);
+
+  return selected > today ? {underage: true} : null;
+};
 @Component({
   selector: 'app-customer-update',
   standalone: true,
@@ -74,7 +85,7 @@ export class CustomerUpdateComponent implements OnInit {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       gender: ['', Validators.required],
-      birthDate: ['',[ Validators.required, noFutureDateValidator]],
+      birthDate: ['',[ Validators.required, noFutureDateValidator, minAge18Validator]],
     });
   }
 

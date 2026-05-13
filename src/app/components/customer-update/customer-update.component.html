@@ -98,6 +98,9 @@
       <mat-error *ngIf="form.controls['birthDate'].hasError('futureDate')">
         Geburtsdatum kann nicht in der Zukunft liegen.
       </mat-error>
+      <mat-error *ngIf="form.controls['birthDate'].hasError('underage')">
+        Kunde muss mindestens 18 Jahre alt sein.
+      </mat-error>
     </mat-form-field>
 
     <!-- Submit -->
