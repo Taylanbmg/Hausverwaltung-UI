@@ -35,6 +35,14 @@
       </div>
     </div>
 
+    <mat-divider></mat-divider>
+
+    <div class="logout-section">
+      <button mat-stroked-button color="warn" class="logout-btn">
+        <mat-icon>logout</mat-icon>
+        Abmelden
+      </button>
+    </div>
   </mat-sidenav>
 
   <!-- Hauptinhalt -->
@@ -52,7 +60,7 @@
       <button mat-button class="toolbar-button" (click)="goToImportExport()">Import / Export</button>
       <button mat-button class="toolbar-button" (click)="goToStatistics()">Auswertungen</button>
 
-      <button mat-icon-button (click)="profileSidenav.toggle()" class="toolbar-button">
+      <button mat-icon-button (click)="profileSidenav.toggle()" class="toolbar-avatar-btn">
         <div class="toolbar-avatar">{{ initials }}</div>
       </button>
     </mat-toolbar>

@@ -16,6 +16,16 @@
   margin: 0 4px;
 }
 
+/* Avatar Button zentriert */
+.toolbar-avatar-btn {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
 /* Avatar in Toolbar */
 .toolbar-avatar {
   width: 32px;
@@ -28,6 +38,7 @@
   justify-content: center;
   font-weight: 700;
   font-size: 13px;
+  pointer-events: none;
 }
 
 /* Sidebar */
