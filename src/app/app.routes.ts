@@ -9,6 +9,7 @@ import {ImportExportComponent} from './components/import-export/import-export.co
 import {CustomerComponent} from './components/customer/customer.component';
 import {ReadingOverviewPageComponent} from './components/reading-overview-page/reading-overview-page.component';
 import {StatisticsComponent} from './components/statistics/statistics.component';
+import {HomeComponent} from './home/home.component';
 
 export const routes: Routes = [
   { path: 'overview', component: CustomerOverviewPageComponent},
@@ -16,8 +17,8 @@ export const routes: Routes = [
   { path: 'erstellen', component: CustomerErstellenComponent},
   { path: 'update', component: CustomerUpdateComponent },
   { path: 'löschen', component: CustomerDeleteComponent },
-  { path: '', redirectTo: 'customers', pathMatch: 'full' },
-  { path: 'customers', component: CustomerComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
   { path: 'reading', component: ReadingComponent },
   { path: 'overviewReading', component: ReadingOverviewPageComponent},
   { path: 'erstellenReading', component: ReadingComponent},

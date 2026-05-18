@@ -58,7 +58,7 @@ export class CustomerErstellenComponent {
     firstName: new FormControl(''),
     lastName: new FormControl(''),
     gender: new FormControl(''),
-    birthDate: new FormControl('', noFutureDateValidator, minAge18Validator)
+    birthDate: new FormControl('', [noFutureDateValidator, minAge18Validator])
   });
 
   geschlechterList = [
