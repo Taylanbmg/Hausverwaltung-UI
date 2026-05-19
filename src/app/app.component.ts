@@ -60,6 +60,7 @@ export class AppComponent implements OnInit {
   }
 
   goToCustomers(): void { this.router.navigate(['/overview']); }
+  goToHome(): void { this.router.navigate(['/home']); }
   goToReading(): void { this.router.navigate(['/overviewReading']); }
   goToImportExport(): void { this.router.navigate(['/import-export']); }
   goToStatistics(): void { this.router.navigate(['/statistics']); }
